@@ -1,7 +1,29 @@
 {% extends "index.html" %}
 {% block content %}
-   <div class="favourite">
-     <h1>Favourites</h1>
-     <p>...</p>
-   </div>
+	<div class="favourite">
+		<h2 style="color:#94D500;">Favourites</h2><br><br>
+		<!-- Slider --> 
+		<div id="demo">
+			<div class="container">
+			  <div class="row">
+				<div class="span12">				
+					<div id="owl-demo" class="owl-carousel">
+					{% for item in rows %}
+					<a href="{{ url_for('track', id = item.id) }}" class="item link">
+						<img style="height:300px; width:200px;" src="{{ url_for('static', filename='img/album/'+item.alb_img) }}" alt="Album Cover">
+					</a>					
+					{% endfor %}
+					</div>				
+				</div>			
+			  </div>		  
+			</div>
+		</div>
+		<br>
+		<div class="customNavigation text-center" >
+			  <!-- old styling <a class="btn prev">Prev</a> -->
+			  <i class="fa fa-chevron-circle-left fa-3x prev" style="color:#94D500;"></i>
+			  <i class="fa fa-chevron-circle-right fa-3x next" style="color:#94D500;"></i>
+		</div>
+		<!-- End of Slider -->
+    </div> 
  {% endblock %}
