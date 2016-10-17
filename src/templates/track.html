@@ -1,0 +1,35 @@
+{% extends "index.html" %}
+{% block content %}
+   <div class="home" style="padding-top: 15px;">
+	<h2 style="color:#94D500;text-transform: capitalize;">Track Name</h2><br>
+	
+			
+			
+								
+			<div class="col-lg-2">
+				<img class="img-responsive" style="height:160px;width:160px;" src="{{ url_for('static', filename='img/artist/aceventura.png') }}" alt="artist">			
+				
+			</div>
+			<div class="col-lg-6 ">
+				<audio controls>				  
+				  <source src="{{ url_for('static', filename='mp3/million.mp3') }}" type="audio/mpeg">
+				Your browser does not support the audio element.
+				</audio>
+				<br><br>
+				<p>Artist:</p>
+				<p>Title:</p>
+				<p>Length:</p>
+				<p>Release date:</p>
+				<p>Description:</p>
+								
+            </div>
+			<div class="col-lg-4">
+				<img class="img-responsive img-center" src="{{ url_for('static', filename='img/album/ff.png') }}" alt="soundwave">
+            </div>
+			           
+
+        </div>
+        <!-- /.row -->
+   </div>
+   </div>
+{% endblock %}

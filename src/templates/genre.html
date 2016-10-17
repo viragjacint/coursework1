@@ -1,62 +1,23 @@
 {% extends "index.html" %}
 {% block content %}
-   <div class="genre" style="padding-top: 50px;">
-     <!-- Page Features -->
-        <div class="row text-center">
-
-            <div class="col-md-3 col-sm-6 hero-feature">
-                <div class="thumbnail">
-                    <img src="http://placehold.it/800x500" alt="">
-                    <div class="caption">
-                        <h3>Feature Label</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                        <p>
-                            <a href="#" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a>
-                        </p>
-                    </div>
-                </div>
+   <div class="home" style="padding-top: 15px;">
+	<h2 style="color:#94D500;text-transform: capitalize;">{{ type }} Mixes</h2>
+	
+			
+			{% for m in rows %}
+								
+			<div class="col-lg-4 col-sm-6 text-center">
+				<div style="padding:5px; border:1px solid #94D500;">
+                <a href="{{ url_for('genre', id=m['id']) }}"><img class="img-circle img-responsive img-center" src="{{ url_for('static', filename='img/album/'+m['alb_img']) }}" alt="{{ m['mix_name'] }}"></a>
+                <h3>{{ m['artist'] }} - 
+                    <small>{{ m['mix_name'] }}</small>
+                </h3>                
+				</div>
             </div>
-
-            <div class="col-md-3 col-sm-6 hero-feature">
-                <div class="thumbnail">
-                    <img src="http://placehold.it/800x500" alt="">
-                    <div class="caption">
-                        <h3>Feature Label</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                        <p>
-                            <a href="#" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3 col-sm-6 hero-feature">
-                <div class="thumbnail">
-                    <img src="http://placehold.it/800x500" alt="">
-                    <div class="caption">
-                        <h3>Feature Label</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                        <p>
-                            <a href="#" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3 col-sm-6 hero-feature">
-                <div class="thumbnail">
-                    <img src="http://placehold.it/800x500" alt="">
-                    <div class="caption">
-                        <h3>Feature Label</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                        <p>
-                            <a href="#" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">More Info</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
+			{% endfor %}            
 
         </div>
         <!-- /.row -->
+   </div>
    </div>
  {% endblock %}

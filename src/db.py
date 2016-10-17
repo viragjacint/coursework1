@@ -1,5 +1,5 @@
 import sqlite3
-DB = 'var/music.db'
+DB = 'db/music.db'
 conn = sqlite3.connect(DB)
 c = conn.cursor()
 
