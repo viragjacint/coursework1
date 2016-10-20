@@ -27,10 +27,18 @@
         <a class="navbar-brand" style="color:#94D500;" href="{{ url_for('root') }}"><i class="fa fa-headphones" aria-hidden="true"></i> My Music</a>
       </div>
       <div id="navbar" class="collapse navbar-collapse">
-      <ul class="nav navbar-nav">
-		<li><a {%- if request.path == "/" %} class="active" {% endif %} href="{{ url_for('root') }}">Catalogue{{url}}</a></li>		
-		<li><a {%- if request.path == "/favourites" %} class="active" {% endif %} href="{{ url_for('favourites') }}">Favourites</a></li>		
-       </ul>
+		<ul class="nav navbar-nav">
+			<li><a {%- if request.path == "/" %} class="active" {% endif %} href="{{ url_for('root') }}"><i class="fa fa-book" style="color:#94D500;" aria-hidden="true"></i> Catalogue</a></li>		
+			<li><a {%- if request.path == "/favourites" %} class="active" {% endif %} href="{{ url_for('favourites') }}">Favourites</a></li>		
+		</ul>
+		<ul class="nav navbar-nav navbar-right">
+			{% if not session.logged_in %}
+			<li><a href="{{ url_for('login') }}"><i class="fa fa-user" style="color:#94D500;" aria-hidden="true"></i>  Login</a></li>			
+			{% else %}
+			<li><a href="{{ url_for('logout') }}"><i class="fa fa-cogs" style="color:#94D500;" aria-hidden="true"></i>  Admin</a></li>
+			<li><a href="{{ url_for('logout') }}"><i class="fa fa-sign-out" style="color:#94D500;" aria-hidden="true"></i>  Logout</a></li>			
+			{% endif %}
+		</ul>		
        </div>
     </div>
   </nav>
