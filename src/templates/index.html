@@ -5,7 +5,7 @@
   <link href="{{ url_for('static', filename='css/font-awesome.min.css') }}" rel="stylesheet" />
   <link href="{{ url_for('static', filename='css/custom.css') }}" rel="stylesheet" />
   <link href="{{ url_for('static', filename='css/owl.carousel.css') }}" rel="stylesheet">
-  <link href="{{ url_for('static', filename='css/owl.theme.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/owl.theme.css') }}" rel="stylesheet">  
   <style>
     body{ 
       padding-top: 50px;
@@ -35,8 +35,9 @@
 			{% if not session.logged_in %}
 			<li><a href="{{ url_for('login') }}"><i class="fa fa-user" style="color:#94D500;" aria-hidden="true"></i>  Login</a></li>			
 			{% else %}
-			<li><a href="{{ url_for('logout') }}"><i class="fa fa-cogs" style="color:#94D500;" aria-hidden="true"></i>  Admin</a></li>
+			<li><a href="{{ url_for('admin') }}"><i class="fa fa-cogs" style="color:#94D500;" aria-hidden="true"></i>  Admin</a></li>
 			<li><a href="{{ url_for('logout') }}"><i class="fa fa-sign-out" style="color:#94D500;" aria-hidden="true"></i>  Logout</a></li>			
+			
 			{% endif %}
 		</ul>		
        </div>

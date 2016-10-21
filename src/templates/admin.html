@@ -1,0 +1,58 @@
+{% extends "index.html" %}
+{% block content %}
+
+	<div class="row">
+		<div class="col-lg-2">
+			<ul class="nav navbar-nav side-nav">
+				<br>
+				<li>
+					<a class="btn btn-primary btn-lg" href="{{ url_for('admin') }}"><i class="fa fa-search" aria-hidden="true"></i> Browse&nbsp;</a>
+				</li>
+				<li>
+					<a class="btn btn-primary btn-lg" href="{{ url_for('admin_add') }}"><i class="fa fa-plus" aria-hidden="true"></i> Add new</a>
+				</li>                                  
+			</ul>
+		</div>
+
+		<div class="col-lg-10">
+		
+			<h1 style="color:#94D500;">
+				Browse and Edit
+			</h1> 	
+			<table class="table table-striped">
+									<thead>
+									  <tr>
+										<th>Artist</th>
+										<th>Mix Name</th>
+										<th>Genre</th>
+										<th>Lenght</th>
+										<th>Release Date</th>										
+										<th>Modify</th>
+										<th>Remove</th>
+									  </tr>
+									</thead>
+									<tbody>
+										{% for item in rows %}
+										<tr>
+											<td>{{ item.artist}}</td>
+											<td>{{ item.mix_name}}</td>
+											<td style="text-transform: capitalize;">{{ item.genre}}</td>
+											<td>{{ item.length}}</td>
+											<td>{{ item.rel_date}}</td>											
+											<td><a href="{{ url_for('admin_edit', id=item.id) }}"><strong style="color:#94D500;">Edit</strong></a></td>
+											<td><a href="{{ url_for('delete', id=item.id) }}" onclick="return confirm('Are you sure?')"><strong style="color:#94D500;">Delete</strong></a></td>
+										</tr>
+										{% endfor %}
+									</tbody>
+								</table>	
+			                       
+		</div>
+	</div>
+	<!-- /.row -->
+
+                
+
+            
+        
+    
+{% endblock %}

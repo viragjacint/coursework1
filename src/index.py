@@ -99,7 +99,53 @@ def logout():
     session.pop('logged_in', None)
     flash('You are logged out')
     return redirect(url_for('root'))
-    
+
+@app.route('/admin')
+def admin():
+	sql = ('SELECT * FROM mixes')
+	connection = sqlite3.connect(app.config['db_location'])
+	connection.row_factory = sqlite3.Row     		
+	rows = connection.cursor().execute(sql).fetchall()
+	connection.close()
+	return render_template('admin.html', rows = rows)
+
+@app.route('/admin_edit')
+def admin_edit():
+	get_id = request.args.get('id')
+	sql = ('SELECT * FROM mixes WHERE id = ?')
+	connection = sqlite3.connect(app.config['db_location'])
+	connection.row_factory = sqlite3.Row     		
+	rows = connection.cursor().execute(sql, get_id).fetchall()
+	connection.close()
+	return render_template('admin_edit.html', rows = rows)
+	
+@app.route('/update', methods=['GET', 'POST'])
+def update():
+	if request.method == 'POST':	
+		sql = ('UPDATE mixes SET artist = ?, mix_name = ?, length = ?, genre = ?, rel_date = ?, desc = ? WHERE id = ?')		
+		connection = sqlite3.connect(app.config['db_location'])
+		connection.row_factory = sqlite3.Row     		
+		connection.cursor().execute(sql, (request.form['artist'],request.form['mix_name'],request.form['length'],request.form['genre'],request.form['rel_date'],request.form['description'],request.form['id']))
+		connection.commit()		
+		connection.close()	
+		return redirect(url_for('admin'))
+
+@app.route('/delete', methods=['GET', 'POST'])
+def delete():
+	get_id = request.args.get('id')	
+	sql = ('DELETE FROM mixes WHERE id = ?')		
+	connection = sqlite3.connect(app.config['db_location'])
+	connection.row_factory = sqlite3.Row     		
+	connection.cursor().execute(sql, get_id)
+	connection.commit()	
+	connection.close()	
+	return redirect(url_for('admin'))
+	
+@app.route('/admin_add')
+def admin_add():	
+	return render_template('admin_add.html')
+			
+		
 if __name__ == '__main__':
     init(app)
     app.run(
