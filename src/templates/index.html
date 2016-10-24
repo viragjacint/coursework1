@@ -30,6 +30,7 @@
 		<ul class="nav navbar-nav">
 			<li><a {%- if request.path == "/" %} class="active" {% endif %} href="{{ url_for('root') }}"><i class="fa fa-heartbeat" style="color:#94D500;" aria-hidden="true"></i> Favourites</a></li>		
 			<li><a href="{{ url_for('catalogue') }}"><i class="fa fa-music" style="color:#94D500;" aria-hidden="true"></i> Genres</a></li>
+			<li><a href="{{ url_for('show_all') }}"><i class="fa fa-eye" style="color:#94D500;" aria-hidden="true"></i> Show All</a></li>
 			<li><a href="{{ url_for('search') }}">&nbsp;<i class="fa fa-search" style="color:#94D500;" aria-hidden="true"></i>&nbsp;</a></li>
 		</ul>
 		<ul class="nav navbar-nav navbar-right">

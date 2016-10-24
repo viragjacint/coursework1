@@ -1,7 +1,8 @@
 {% extends "index.html" %}
 {% block content %}
-	<div class="favourite" style="padding-top: 15px;">
-		<h2 style="color:#94D500;">Browse by Favourites</h2><br>
+	<div class="favourite" style="padding-top: 15px;">		
+		<h2 style="color:#94D500;">Browse by Favourites</h2><br><br>
+		
 		<!-- Slider --> 
 		<div id="demo">
 			<div class="container">
@@ -10,7 +11,7 @@
 					<div id="owl-demo" class="owl-carousel">
 					{% for item in rows %}
 					<a href="{{ url_for('track', id = item.id) }}" class="item link">
-						<img style="height:300px; width:200px;" src="{{ url_for('static', filename='img/album/'+item.alb_img) }}" alt="Album Cover">
+						<img style="height:230px;width:220px;" src="{{ url_for('static', filename='img/album/'+item.alb_img) }}" alt="Album Cover">
 					</a>					
 					{% endfor %}
 					</div>				

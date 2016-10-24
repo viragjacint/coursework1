@@ -38,6 +38,16 @@ def root():
 @app.route('/catalogue')
 def catalogue():
 	return render_template('catalogue.html'), 200
+
+@app.route('/show_all')	
+def show_all():
+	sql = ('SELECT * FROM mixes')
+	connection = sqlite3.connect(app.config['db_location'])
+	connection.row_factory = sqlite3.Row     		
+	rows = connection.cursor().execute(sql).fetchall()	
+	connection.close()
+	return render_template('showall.html', rows = rows)
+	
 	
 @app.route('/search', methods=['GET', 'POST'])
 def search():	
