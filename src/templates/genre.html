@@ -1,7 +1,7 @@
 {% extends "index.html" %}
 {% block content %}
    <div class="home" style="padding-top: 15px;">
-	<h2 style="color:#94D500;text-transform: capitalize;">{{ type }} Mixes</h2>
+	<h2 style="color:#94D500;text-transform: capitalize;">{{ type }} Mixes</h2><br>
 	
 			
 			{% for m in rows %}
@@ -14,10 +14,7 @@
                 </h3>                
 				</div>
             </div>
-			{% endfor %}            
-
-        </div>
-        <!-- /.row -->
-   </div>
+			{% endfor %}  
+        
    </div>
  {% endblock %}

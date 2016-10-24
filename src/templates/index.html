@@ -28,11 +28,12 @@
       </div>
       <div id="navbar" class="collapse navbar-collapse">
 		<ul class="nav navbar-nav">
-			<li><a {%- if request.path == "/" %} class="active" {% endif %} href="{{ url_for('root') }}"><i class="fa fa-book" style="color:#94D500;" aria-hidden="true"></i> Catalogue</a></li>		
-			<li><a {%- if request.path == "/favourites" %} class="active" {% endif %} href="{{ url_for('favourites') }}">Favourites</a></li>		
+			<li><a {%- if request.path == "/" %} class="active" {% endif %} href="{{ url_for('root') }}"><i class="fa fa-heartbeat" style="color:#94D500;" aria-hidden="true"></i> Favourites</a></li>		
+			<li><a href="{{ url_for('catalogue') }}"><i class="fa fa-music" style="color:#94D500;" aria-hidden="true"></i> Genres</a></li>
+			<li><a href="{{ url_for('search') }}">&nbsp;<i class="fa fa-search" style="color:#94D500;" aria-hidden="true"></i>&nbsp;</a></li>
 		</ul>
 		<ul class="nav navbar-nav navbar-right">
-			{% if not session.logged_in %}
+			{% if not session.admin %}
 			<li><a href="{{ url_for('login') }}"><i class="fa fa-user" style="color:#94D500;" aria-hidden="true"></i>  Login</a></li>			
 			{% else %}
 			<li><a href="{{ url_for('admin') }}"><i class="fa fa-cogs" style="color:#94D500;" aria-hidden="true"></i>  Admin</a></li>

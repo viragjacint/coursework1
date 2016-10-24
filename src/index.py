@@ -26,17 +26,31 @@ def init(app):
 
 
 @app.route('/')
-def root():	
-	return render_template('catalogue.html'), 200
-
-@app.route('/favourites')
-def favourites():
+def root():
 	sql = ('SELECT * FROM mixes WHERE favourite = 1')
 	connection = sqlite3.connect(app.config['db_location'])
 	connection.row_factory = sqlite3.Row     		
 	rows = connection.cursor().execute(sql).fetchall()	
 	connection.close()
 	return render_template('favourites.html', rows = rows)
+	
+
+@app.route('/catalogue')
+def catalogue():
+	return render_template('catalogue.html'), 200
+	
+@app.route('/search', methods=['GET', 'POST'])
+def search():	
+	if request.method == 'POST':
+		search = request.form['search']
+		sql = 'SELECT * FROM mixes WHERE artist LIKE "%'+search+'%" OR mix_name LIKE "%'+search+'%"'
+		connection = sqlite3.connect(app.config['db_location'])
+		connection.row_factory = sqlite3.Row     		
+		rows = connection.cursor().execute(sql).fetchall()
+		return render_template('search.html', rows = rows)
+	else:
+		search = 0
+		return render_template('search.html', search = search), 200
 
 @app.route('/removefav', methods=['GET'])	
 def removefav():
@@ -61,12 +75,12 @@ def addfav():
 	return redirect(url_for('track', id=get_id))
 	
 @app.route('/track', methods=['GET'])
-def track():
-	get_id = request.args.get('id')
+@app.route('/track/<id>', methods=['GET'])
+def track(id):	
 	sql = ('SELECT * FROM mixes WHERE id = ?')
 	connection = sqlite3.connect(app.config['db_location'])
 	connection.row_factory = sqlite3.Row     		
-	rows = connection.cursor().execute(sql, get_id).fetchall()
+	rows = connection.cursor().execute(sql, id).fetchall()
 	connection.close()	
 	return render_template('track.html', rows = rows)
 
@@ -89,35 +103,39 @@ def login():
 		elif request.form['password'] != app.config['password']:
 			error = 'Invalid password'
 		else:
-			session['logged_in'] = True
-			flash('You are logged in')
-			return redirect(url_for('root'))
+			session['admin'] = True			
+			return redirect(url_for('admin'))
 	return render_template('login.html', error=error)	
 
 @app.route('/logout')
 def logout():
-    session.pop('logged_in', None)
-    flash('You are logged out')
+    session.pop('admin', None)    
     return redirect(url_for('root'))
 
 @app.route('/admin')
 def admin():
-	sql = ('SELECT * FROM mixes')
-	connection = sqlite3.connect(app.config['db_location'])
-	connection.row_factory = sqlite3.Row     		
-	rows = connection.cursor().execute(sql).fetchall()
-	connection.close()
-	return render_template('admin.html', rows = rows)
+	if not session.get('admin'):
+		abort(401)
+	else:
+		sql = ('SELECT * FROM mixes')
+		connection = sqlite3.connect(app.config['db_location'])
+		connection.row_factory = sqlite3.Row     		
+		rows = connection.cursor().execute(sql).fetchall()
+		connection.close()
+		return render_template('admin.html', rows = rows)
 
 @app.route('/admin_edit')
 def admin_edit():
-	get_id = request.args.get('id')
-	sql = ('SELECT * FROM mixes WHERE id = ?')
-	connection = sqlite3.connect(app.config['db_location'])
-	connection.row_factory = sqlite3.Row     		
-	rows = connection.cursor().execute(sql, get_id).fetchall()
-	connection.close()
-	return render_template('admin_edit.html', rows = rows)
+	if not session.get('admin'):
+		abort(401)
+	else:
+		get_id = request.args.get('id')
+		sql = ('SELECT * FROM mixes WHERE id = ?')
+		connection = sqlite3.connect(app.config['db_location'])
+		connection.row_factory = sqlite3.Row     		
+		rows = connection.cursor().execute(sql, get_id).fetchall()
+		connection.close()
+		return render_template('admin_edit.html', rows = rows)
 	
 @app.route('/update', methods=['GET', 'POST'])
 def update():
@@ -132,18 +150,24 @@ def update():
 
 @app.route('/delete', methods=['GET', 'POST'])
 def delete():
-	get_id = request.args.get('id')	
-	sql = ('DELETE FROM mixes WHERE id = ?')		
-	connection = sqlite3.connect(app.config['db_location'])
-	connection.row_factory = sqlite3.Row     		
-	connection.cursor().execute(sql, get_id)
-	connection.commit()	
-	connection.close()	
-	return redirect(url_for('admin'))
+	if not session.get('admin'):
+		abort(401)
+	else:
+		get_id = request.args.get('id')	
+		sql = ('DELETE FROM mixes WHERE id = ?')		
+		connection = sqlite3.connect(app.config['db_location'])
+		connection.row_factory = sqlite3.Row     		
+		connection.cursor().execute(sql, get_id)
+		connection.commit()	
+		connection.close()	
+		return redirect(url_for('admin'))
 	
 @app.route('/admin_add')
-def admin_add():	
-	return render_template('admin_add.html')
+def admin_add():
+	if not session.get('admin'):
+		abort(401)
+	else:
+		return render_template('admin_add.html')
 			
 		
 if __name__ == '__main__':
