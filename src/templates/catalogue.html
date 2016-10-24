@@ -1,67 +1,69 @@
 {% extends "index.html" %}
 {% block content %}
-   <div class="home" style="padding-top: 15px;">
-	<h2 style="color:#94D500;text-transform: capitalize;">Browse by Genre</h2>
-     <div class="genre" style="padding-top: 25px;">
-     <!-- Page Features -->
-        <div class="row text-center">
+	<div class="container">
+	   <div class="home" style="padding-top: 15px;">
+		<h2 style="color:#94D500;text-transform: capitalize;">Browse by Genre</h2>
+		 <div class="genre" style="padding-top: 25px;">
+		 <!-- Page Features -->
+			<div class="row text-center">
 
-            <div class="col-md-3 col-sm-6 hero-feature">
-                <div class="thumbnail">
-                    <img style="width:250px; height:155px;" src="{{ url_for('static', filename='img/genre/techno.png') }}" alt="">
-                    <div class="caption">
-                        <h3 style="color:#94D500;">Techno</h3>
-                        <p></p>
-                        <p>
-                        <a href="{{ url_for('genre')}}/techno" class="btn btn-default">Find Mixes</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-			
-			<div class="col-md-3 col-sm-6 hero-feature">
-                <div class="thumbnail">
-                    <img style="width:250px; height:155px;" src="{{ url_for('static', filename='img/genre/house.png') }}" alt="">
-                    <div class="caption">
-                        <h3 style="color:#94D500;">House</h3>
-                        <p></p>
-                        <p>
-                        <a href="{{ url_for('genre')}}/house" class="btn btn-default">Find Mixes</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-			
-			<div class="col-md-3 col-sm-6 hero-feature">
-                <div class="thumbnail">
-                    <img style="width:250px; height:155px;" src="{{ url_for('static', filename='img/genre/psy.png') }}" alt="">
-                    <div class="caption">
-                        <h3 style="color:#94D500;">PsyTrance</h3>
-                        <p></p>
-                        <p>
-                        <a href="{{ url_for('genre')}}/psy" class="btn btn-default">Find Mixes</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-			
-			<div class="col-md-3 col-sm-6 hero-feature">
-                <div class="thumbnail">
-                    <img style="width:250px; height:155px;" src="{{ url_for('static', filename='img/genre/dnb.png') }}" alt="">
-                    <div class="caption">
-                        <h3 style="color:#94D500;">Drum&amp;Bass</h3>
-                        <p></p>
-                        <p>
-                        <a href="{{ url_for('genre')}}/dnb" class="btn btn-default">Find Mixes</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
+				<div class="col-md-3 col-sm-6 hero-feature">
+					<div class="thumbnail">
+						<img style="width:250px; height:155px;" src="{{ url_for('static', filename='img/genre/techno.png') }}" alt="">
+						<div class="caption">
+							<h3 style="color:#94D500;">Techno</h3>
+							<p></p>
+							<p>
+							<a href="{{ url_for('genre')}}/techno" class="btn btn-default">Find Mixes</a>
+							</p>
+						</div>
+					</div>
+				</div>
+				
+				<div class="col-md-3 col-sm-6 hero-feature">
+					<div class="thumbnail">
+						<img style="width:250px; height:155px;" src="{{ url_for('static', filename='img/genre/house.png') }}" alt="">
+						<div class="caption">
+							<h3 style="color:#94D500;">House</h3>
+							<p></p>
+							<p>
+							<a href="{{ url_for('genre')}}/house" class="btn btn-default">Find Mixes</a>
+							</p>
+						</div>
+					</div>
+				</div>
+				
+				<div class="col-md-3 col-sm-6 hero-feature">
+					<div class="thumbnail">
+						<img style="width:250px; height:155px;" src="{{ url_for('static', filename='img/genre/psy.png') }}" alt="">
+						<div class="caption">
+							<h3 style="color:#94D500;">PsyTrance</h3>
+							<p></p>
+							<p>
+							<a href="{{ url_for('genre')}}/psy" class="btn btn-default">Find Mixes</a>
+							</p>
+						</div>
+					</div>
+				</div>
+				
+				<div class="col-md-3 col-sm-6 hero-feature">
+					<div class="thumbnail">
+						<img style="width:250px; height:155px;" src="{{ url_for('static', filename='img/genre/dnb.png') }}" alt="">
+						<div class="caption">
+							<h3 style="color:#94D500;">Drum&amp;Bass</h3>
+							<p></p>
+							<p>
+							<a href="{{ url_for('genre')}}/dnb" class="btn btn-default">Find Mixes</a>
+							</p>
+						</div>
+					</div>
+				</div>
 
-            
+				
 
-        </div>
-        <!-- /.row -->
-   </div>
-   </div>
+			</div>
+			<!-- /.row -->
+	   </div>
+	   </div>
+	</div>
  {% endblock %}

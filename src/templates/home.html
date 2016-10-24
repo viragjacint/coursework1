@@ -1,0 +1,13 @@
+{% extends "index.html" %}
+{% block content %}
+	 
+   <header style="background-image:url({{'static/img/misc/bg.jpg'}});background-repeat: no-repeat;background-attachment: scroll;background-position: center center;-webkit-background-size: cover;-moz-background-size: cover;background-size: cover;-o-background-size: cover;text-align: center;color:white;">
+        <div class="container">
+            <div class="intro-text"><br><br>			
+                <div class="intro-lead-in"><span style="background-color:rgba(50, 55, 59, 0.6);padding:3px;">Welcome To My Music Catalogue!</span></div>
+                <div class="intro-heading"><span style="background-color:rgba(50, 55, 59, 0.6);padding:3px;">Listen to my mixes!</span></div>
+                <a href="{{ url_for('show_all') }}" class="btn btn-lg btn-primary" style="background-image:none; background-color:#94D500; color:black;">Browse</a>
+            </div>
+        </div>
+    </header>
+ {% endblock %}

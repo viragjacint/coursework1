@@ -1,37 +1,38 @@
 {% extends "index.html" %}
 {% block content %}
-   <div class="home" style="padding-top: 15px;">
-	
-	
-			
-			{% for item in rows %}
-			<h2 style="color:#94D500;text-transform: capitalize;">{{ item.artist}} - {{ item.mix_name}}</h2><br>					
-			<div class="col-lg-2">
-				<img class="img-responsive" style="height:160px;width:160px;" src="{{ url_for('static', filename='img/misc/soundwave.png') }}" alt="soundwave">			
+	<div class="container">
+	   <div class="home" style="padding-top: 15px;">
 				
-			</div>
-			<div class="col-lg-6 ">
-				<audio controls preload="none">				  
-				  <source src="{{ url_for('static', filename='mp3/'+item.mp3_name) }}" type="audio/mpeg">
-				Your browser does not support the audio element.
-				</audio>
-				<br><br>
-				<p>Artist: {{ item.artist}}</p>
-				<p>Title: {{ item.mix_name}}</p>
-				<p>Length: {{ item.length}}</p>
-				<p>Release date: {{ item.rel_date}}</p>
-				<p>Description: {{ item.desc}}</p>
-				{% if item.favourite == 1 %}
-					<a href="{{ url_for('removefav', id=item.id) }}"><i style="color:#94D500;" class="fa fa-heart fa-2x" aria-hidden="true" title="Liked"></i></a>				
-				{% else %}
-					<a href="{{ url_for('addfav', id=item.id) }}"><i style="color:grey;" class="fa fa-heart fa-2x" aria-hidden="true" title="Add to Favourites"></i></a>
-				{% endif %}				
-            </div>
-			<div class="col-lg-4">
-				<img class="img-responsive img-center" src="{{ url_for('static', filename='img/album/'+item.alb_img) }}" alt="album cover">
-            </div>
-			           
-			{% endfor %}
-        
-   </div>
+				{% for item in rows %}
+				<h2 style="color:#94D500;text-transform: capitalize;">{{ item.artist}} - {{ item.mix_name}}</h2><br>					
+				<div class="col-lg-2">
+					<img class="img-responsive" style="height:160px;width:160px;" src="{{ url_for('static', filename='img/misc/soundwave.png') }}" alt="soundwave">			
+					
+				</div>
+				<div class="col-lg-6 ">
+					<audio controls preload="none">				  
+					  <source src="{{ url_for('static', filename='mp3/'+item.mp3_name) }}" type="audio/mpeg">
+					Your browser does not support the audio element.
+					</audio>
+					<br><br>
+					<p>Artist: {{ item.artist}}</p>
+					<p>Title: {{ item.mix_name}}</p>
+					<p>Genre:<span style="text-transform:capitalize;"> {{ item.genre}} </span></p>
+					<p>Length: {{ item.length}}</p>
+					<p>Release date: {{ item.rel_date}}</p>
+					<p>Description: {{ item.desc}}</p>
+					{% if item.favourite == 1 %}
+						<a href="{{ url_for('removefav', id=item.id) }}"><i style="color:#94D500;" class="fa fa-heart fa-2x" aria-hidden="true" title="Liked"></i></a>				
+					{% else %}
+						<a href="{{ url_for('addfav', id=item.id) }}"><i style="color:grey;" class="fa fa-heart fa-2x" aria-hidden="true" title="Add to Favourites"></i></a>
+					{% endif %}				
+				</div>
+				<div class="col-lg-4">
+					<img class="img-responsive img-center" src="{{ url_for('static', filename='img/album/'+item.alb_img) }}" alt="album cover">
+				</div>
+						   
+				{% endfor %}
+			
+	   </div>
+	</div>
 {% endblock %}

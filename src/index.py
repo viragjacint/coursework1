@@ -1,4 +1,5 @@
-from flask import * 
+from flask import *
+from werkzeug import secure_filename
 import sqlite3
 import ConfigParser
 import os
@@ -24,9 +25,12 @@ def init(app):
 		print "Could not read configs from: ", config_location
 
 
-
 @app.route('/')
-def root():
+def root():	
+	return render_template('home.html')
+	
+@app.route('/favourite')
+def favourite():
 	sql = ('SELECT * FROM mixes WHERE favourite = 1')
 	connection = sqlite3.connect(app.config['db_location'])
 	connection.row_factory = sqlite3.Row     		
@@ -179,7 +183,25 @@ def admin_add():
 	else:
 		return render_template('admin_add.html')
 			
+@app.route('/uploader', methods=['GET', 'POST'])
+def uploader():
+	if not session.get('admin'):
+		abort(401)
+	else:
+		if request.method == 'POST':
+			img = request.files['img']
+			mp3 = request.files['mp3']			
+			img.save('static/img/album/'+img.filename)
+			mp3.save('static/mp3/'+mp3.filename)
+			sql = ('INSERT INTO mixes (artist,favourite,length,genre,rel_date,alb_img,mix_name,mp3_name,desc) VALUES (?,?,?,?,?,?,?,?,?)')		
+			connection = sqlite3.connect(app.config['db_location'])
+			connection.row_factory = sqlite3.Row     		
+			connection.cursor().execute(sql, (request.form['artist'],request.form['favourite'],request.form['length'],request.form['genre'],request.form['rel_date'],img.filename,request.form['mix_name'],mp3.filename,request.form['description']))
+			connection.commit()		
+			connection.close()			
+			return redirect(url_for('admin'))
 		
+			
 if __name__ == '__main__':
     init(app)
     app.run(

@@ -1,50 +1,52 @@
 {% extends "index.html" %}
 {% block content %}
-   <div class="home" style="padding-top: 15px;">
-		<h2 style="color:#94D500;text-transform: capitalize;">Music Search</h2><br>
-		
-		<div class="well">			
-			<form class="form-horizontal" method="post">
-				<div class="input-group">
-					<input type="text" class="form-control" name="search" placeholder="Search by artist or title">
-					<span class="input-group-btn">
-						<button class="btn btn-default" type="submit">&nbsp;<i class="fa fa-search" style="color:#94D500;"></i>&nbsp;</button>
-					</span>								
-				</div>
-			</form>
-			<!-- /.input-group -->
-		</div>
-		{% if search != 0 %}			
-				<div>
-					<table class="table table-striped">
-						<thead>
-						  <tr>
-							<th>Listen</th>
-							<th>Cover</th>
-							<th>Artist</th>
-							<th>Mix Name</th>
-							<th>Genre</th>
-							<th>Lenght</th>
-							<th>Release Date</th>	
-						  </tr>
-						</thead>
-						<tbody>
-							{% for item in rows %}								
-								<tr>
-									<td>&nbsp;<a href="{{ url_for('track', id=item.id) }}"><i class="fa fa-play fa-2x" style="color:#94D500;" aria-hidden="true"></i></a></td>
-									<td><img style="height:35px;width:35px;" src="{{ url_for('static', filename='img/album/'+item.alb_img) }}" alt="album cover"></td>
-									<td>{{ item.artist}}</td>
-									<td>{{ item.mix_name}}</td>
-									<td style="text-transform: capitalize;">{{ item.genre}}</td>
-									<td>{{ item.length}}</td>
-									<td>{{ item.rel_date}}</td>					
-								</tr>								
-							{% endfor %}
-						</tbody>
-					</table>			
-				</div>			
-		{% endif %}	     
+	<div class="container">
+	   <div class="home" style="padding-top: 15px;">
+			<h2 style="color:#94D500;text-transform: capitalize;">Music Search</h2><br>
+			
+			<div class="well">			
+				<form class="form-horizontal" method="post">
+					<div class="input-group">
+						<input type="text" class="form-control" name="search" placeholder="Search by artist or title">
+						<span class="input-group-btn">
+							<button class="btn btn-default" type="submit">&nbsp;<i class="fa fa-search" style="color:#94D500;"></i>&nbsp;</button>
+						</span>								
+					</div>
+				</form>
+				<!-- /.input-group -->
+			</div>
+			{% if search != 0 %}			
+					<div>
+						<table class="table table-striped">
+							<thead>
+							  <tr>
+								<th>Listen</th>
+								<th>Cover</th>
+								<th>Artist</th>
+								<th>Mix Name</th>
+								<th>Genre</th>
+								<th>Lenght</th>
+								<th>Release Date</th>	
+							  </tr>
+							</thead>
+							<tbody>
+								{% for item in rows %}								
+									<tr>
+										<td>&nbsp;<a href="{{ url_for('track', id=item.id) }}"><i class="fa fa-play fa-2x" style="color:#94D500;" aria-hidden="true"></i></a></td>
+										<td><img style="height:35px;width:35px;" src="{{ url_for('static', filename='img/album/'+item.alb_img) }}" alt="album cover"></td>
+										<td>{{ item.artist}}</td>
+										<td>{{ item.mix_name}}</td>
+										<td style="text-transform: capitalize;">{{ item.genre}}</td>
+										<td>{{ item.length}}</td>
+										<td>{{ item.rel_date}}</td>					
+									</tr>								
+								{% endfor %}
+							</tbody>
+						</table>			
+					</div>			
+			{% endif %}	     
 
-        
-   </div>
+			
+	   </div>
+	</div>
  {% endblock %}
