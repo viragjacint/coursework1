@@ -3,6 +3,8 @@ from werkzeug import secure_filename
 import sqlite3
 import ConfigParser
 import os
+import logging
+from logging.handlers import RotatingFileHandler
 
 app = Flask(__name__)
 
@@ -21,12 +23,29 @@ def init(app):
 		app.config['password'] = config.get("config", "password")
 		app.config['db_location'] = 'db/music.db'
 		app.secret_key  = config.get("config", "secret_key")
+		
+		app.config['log_file'] = config.get("logging", "name")
+		app.config['log_location'] = config.get("logging", "location")
+		app.config['log_level'] = config.get("logging", "level")		
 	except:
 		print "Could not read configs from: ", config_location
 
 
+		
+def logs(app):
+    log_pathname = app.config['log_location'] + app.config['log_file']
+    file_handler = RotatingFileHandler(log_pathname, maxBytes=1024* 1024 * 10 , backupCount=1024)
+    file_handler.setLevel( app.config['log_level'] )
+    formatter = logging.Formatter("%(levelname)s | %(asctime)s |  %(module)s | %(funcName)s | %(message)s")
+    file_handler.setFormatter(formatter)
+    app.logger.setLevel( app.config['log_level'] )
+    app.logger.addHandler(file_handler)
+		
+		
 @app.route('/')
-def root():	
+def root():
+	this_route = url_for('.root')
+	app.logger.info("Logging a test message from "+this_route)
 	return render_template('home.html')
 	
 @app.route('/favourite')
@@ -61,6 +80,7 @@ def search():
 		connection = sqlite3.connect(app.config['db_location'])
 		connection.row_factory = sqlite3.Row     		
 		rows = connection.cursor().execute(sql).fetchall()
+		connection.close()
 		return render_template('search.html', rows = rows)
 	else:
 		search = 0
@@ -203,8 +223,9 @@ def uploader():
 		
 			
 if __name__ == '__main__':
-    init(app)
-    app.run(
-        host=app.config['ip_address'], 
-        port=int(app.config['port']),
+	init(app)
+	logs(app)
+	app.run(
+		host=app.config['ip_address'], 
+		port=int(app.config['port']),
 		threaded=True)
