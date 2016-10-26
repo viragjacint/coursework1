@@ -92,7 +92,7 @@ def removefav():
 	sql = ('UPDATE mixes SET favourite = 0 WHERE id = ?')
 	connection = sqlite3.connect(app.config['db_location'])
 	connection.row_factory = sqlite3.Row     		
-	connection.cursor().execute(sql, get_id)
+	connection.cursor().execute(sql, [get_id])
 	connection.commit()
 	connection.close()
 	return redirect(url_for('track', id=get_id))
@@ -103,7 +103,7 @@ def addfav():
 	sql = ('UPDATE mixes SET favourite = 1 WHERE id = ?')
 	connection = sqlite3.connect(app.config['db_location'])
 	connection.row_factory = sqlite3.Row     		
-	connection.cursor().execute(sql, get_id)
+	connection.cursor().execute(sql, [get_id])
 	connection.commit()
 	connection.close()
 	return redirect(url_for('track', id=get_id))
@@ -114,7 +114,7 @@ def track(id):
 	sql = ('SELECT * FROM mixes WHERE id = ?')
 	connection = sqlite3.connect(app.config['db_location'])
 	connection.row_factory = sqlite3.Row     		
-	rows = connection.cursor().execute(sql, id).fetchall()
+	rows = connection.cursor().execute(sql, [id]).fetchall()
 	connection.close()	
 	return render_template('track.html', rows = rows)
 
@@ -154,8 +154,7 @@ def admin():
 		sql = ('SELECT * FROM mixes')
 		connection = sqlite3.connect(app.config['db_location'])
 		connection.row_factory = sqlite3.Row     		
-		rows = connection.cursor().execute(sql).fetchall()
-		connection.close()
+		rows = connection.cursor().execute(sql).fetchall()		
 		return render_template('admin.html', rows = rows)
 
 @app.route('/admin_edit')
@@ -163,23 +162,21 @@ def admin_edit():
 	if not session.get('admin'):
 		abort(401)
 	else:
-		get_id = request.args.get('id')
+		get_id = request.args.get('id')		
 		sql = ('SELECT * FROM mixes WHERE id = ?')
 		connection = sqlite3.connect(app.config['db_location'])
 		connection.row_factory = sqlite3.Row     		
-		rows = connection.cursor().execute(sql, get_id).fetchall()
-		connection.close()
+		rows = connection.cursor().execute(sql, [get_id]).fetchall()					
 		return render_template('admin_edit.html', rows = rows)
 	
 @app.route('/update', methods=['GET', 'POST'])
 def update():
 	if request.method == 'POST':	
-		sql = ('UPDATE mixes SET artist = ?, mix_name = ?, length = ?, genre = ?, rel_date = ?, desc = ? WHERE id = ?')		
+		sql = ('UPDATE mixes SET artist = ?, mix_name = ?, lenght = ?, genre = ?, rel_date = ?, desc = ? WHERE id = ?')		
 		connection = sqlite3.connect(app.config['db_location'])
 		connection.row_factory = sqlite3.Row     		
-		connection.cursor().execute(sql, (request.form['artist'],request.form['mix_name'],request.form['length'],request.form['genre'],request.form['rel_date'],request.form['description'],request.form['id']))
-		connection.commit()		
-		connection.close()	
+		connection.cursor().execute(sql, (request.form['artist'],request.form['mix_name'],request.form['lenght'],request.form['genre'],request.form['rel_date'],request.form['description'],request.form['id']))
+		connection.commit()			
 		return redirect(url_for('admin'))
 
 @app.route('/delete', methods=['GET', 'POST'])
@@ -188,12 +185,15 @@ def delete():
 		abort(401)
 	else:
 		get_id = request.args.get('id')	
+		get_img = request.args.get('img')
+		get_mp3 = request.args.get('mp3')	
 		sql = ('DELETE FROM mixes WHERE id = ?')		
 		connection = sqlite3.connect(app.config['db_location'])
 		connection.row_factory = sqlite3.Row     		
-		connection.cursor().execute(sql, get_id)
-		connection.commit()	
-		connection.close()	
+		connection.cursor().execute(sql, [get_id])
+		connection.commit()
+		os.remove('static/img/album/'+get_img)
+		os.remove('static/mp3/'+get_mp3)
 		return redirect(url_for('admin'))
 	
 @app.route('/admin_add')
@@ -213,12 +213,11 @@ def uploader():
 			mp3 = request.files['mp3']			
 			img.save('static/img/album/'+img.filename)
 			mp3.save('static/mp3/'+mp3.filename)
-			sql = ('INSERT INTO mixes (artist,favourite,length,genre,rel_date,alb_img,mix_name,mp3_name,desc) VALUES (?,?,?,?,?,?,?,?,?)')		
+			sql = ('INSERT INTO mixes (artist,favourite,lenght,genre,rel_date,alb_img,mix_name,mp3_name,desc) VALUES (?,?,?,?,?,?,?,?,?)')		
 			connection = sqlite3.connect(app.config['db_location'])
 			connection.row_factory = sqlite3.Row     		
-			connection.cursor().execute(sql, (request.form['artist'],request.form['favourite'],request.form['length'],request.form['genre'],request.form['rel_date'],img.filename,request.form['mix_name'],mp3.filename,request.form['description']))
-			connection.commit()		
-			connection.close()			
+			connection.cursor().execute(sql, (request.form['artist'],request.form['favourite'],request.form['lenght'],request.form['genre'],request.form['rel_date'],img.filename,request.form['mix_name'],mp3.filename,request.form['description']))
+			connection.commit()						
 			return redirect(url_for('admin'))
 		
 			

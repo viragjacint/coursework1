@@ -40,7 +40,7 @@
 												<td>{{ item.length}}</td>
 												<td>{{ item.rel_date}}</td>											
 												<td><a href="{{ url_for('admin_edit', id=item.id) }}"><strong style="color:#94D500;">Edit</strong></a></td>
-												<td><a href="{{ url_for('delete', id=item.id) }}" onclick="return confirm('Are you sure?')"><strong style="color:#94D500;">Delete</strong></a></td>
+												<td><a href="{{ url_for('delete', id=item.id, img = item.alb_img, mp3 = item.mp3_name) }}" onclick="return confirm('Are you sure?')"><strong style="color:#94D500;">Delete</strong></a></td>
 											</tr>
 											{% endfor %}
 										</tbody>
