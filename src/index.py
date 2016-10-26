@@ -163,15 +163,15 @@ def admin():
 		return render_template('admin.html', rows = rows)
 
 @app.route('/admin_edit')
-def admin_edit():
+@app.route('/admin_edit/<id>')
+def admin_edit(id):
 	if not session.get('admin'):
 		abort(401)
-	else:
-		get_id = request.args.get('id')		
+	else:				
 		sql = ('SELECT * FROM mixes WHERE id = ?')
 		connection = sqlite3.connect(app.config['db_location'])
 		connection.row_factory = sqlite3.Row     		
-		rows = connection.cursor().execute(sql, [get_id]).fetchall()					
+		rows = connection.cursor().execute(sql, [id]).fetchall()					
 		return render_template('admin_edit.html', rows = rows)
 	
 @app.route('/update', methods=['GET', 'POST'])
